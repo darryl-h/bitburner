@@ -1,6 +1,6 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    ns.tprint("[VERS] - Version 0.03");
+    ns.tprint("[VERS] - Version 0.04");
     // Get a list of servers that are near us
     let servers = ns.scan(ns.getHostname());
     // Remove home from the output
@@ -80,7 +80,7 @@ export async function main(ns) {
         // Now we can copy our files to this server
         ns.tprint("[COPY] - copying rootkit to " + serverName);
         await ns.scp("early-hack-template.script", serverName);
-        await ns.scp("deployer.js", serverName);
+        await ns.scp("scan_and_root.js", serverName);
         // ns.tprint("Remote Executing against " + serverName);
         // ns.exec("early-hack-template.script", serverName, 1, "n00dles");
     }
