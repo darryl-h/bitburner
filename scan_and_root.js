@@ -1,11 +1,15 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    ns.tprint("[VERS] - Version 0.04");
+    ns.tprint("[VERS] - Version 0.06");
     // Get a list of servers that are near us
     let servers = ns.scan(ns.getHostname());
-    // Remove home from the output
+    //ns.tprint("DEBUG Nearby Servers: " + servers);
+    // Remove home from the output IF it exists
     let home_server_position = servers.indexOf("home");
-    servers.splice(home_server_position, 1);
+    if (home_server_position != -1) {
+        servers.splice(home_server_position, 1);
+    }
+    ns.tprint("DEBUG Home position: " + home_server_position);
     // INFO
     ns.tprint("-----[LOCAL INFO]-----");
     ns.tprint("ServerName: " + ns.getHostname());
