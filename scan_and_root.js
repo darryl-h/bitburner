@@ -1,16 +1,15 @@
+// This is an old script, probably don't use it. This will only scan the servers near you.
+
 /** @param {NS} ns */
 export async function main(ns) {
-    ns.tprint("[VERS] - Version 0.06");
+    ns.tprint("[VERS] - Version 0.10");
     // Get a list of servers that are near us
     let servers = ns.scan(ns.getHostname());
-    //ns.tprint("DEBUG Nearby Servers: " + servers);
-    // Remove home from the output IF it exists
     let home_server_position = servers.indexOf("home");
     if (home_server_position != -1) {
         servers.splice(home_server_position, 1);
     }
     ns.tprint("DEBUG Home position: " + home_server_position);
-    // INFO
     ns.tprint("-----[LOCAL INFO]-----");
     ns.tprint("ServerName: " + ns.getHostname());
     // print a list of servers
@@ -74,9 +73,11 @@ export async function main(ns) {
         let source_server_position = remote_servers.indexOf(ns.getHostname());
         // Remove the current server from the output from the target server
         remote_servers.splice(source_server_position, 1);
-        // remove the home server from the output
-        let home_server_position = remote_servers.indexOf("home");
-        remote_servers.splice(home_server_position, 1);
+        // Remove home from the output IF it exists
+        let home_server_position = servers.indexOf("home");
+        if (home_server_position != -1) {
+            remote_servers.splice(home_server_position, 1);
+        }
         // If there is any output, let the user know
         if (remote_servers.length > 0) {
             ns.tprint("[NEAR] - Nearby Servers: " + remote_servers);
