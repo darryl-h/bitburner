@@ -77,12 +77,10 @@ Connected to home
 home
 ```
 
+# 1. Learning whats around you
+* Scan 
+Shows servers 1 hop away from your current host.
 
-
-## Learning whats around you
-
-### scan
-Scan's machines near you
 Example Output:
 ```
 Hostname        IP       Root Access
@@ -95,8 +93,8 @@ harakiri-sushi  49.6.5.6 N
 iron-gym        91.5.4.0 N
 ```
 
-### scan-analyze
-This will show you more in depth information about the servers that you know about
+* scan-analyze <depth>
+Shows a tree view out to N hops. Great for “how do I reach X?”
 
 Example Output:
 ```
@@ -134,8 +132,53 @@ home /]> scan-analyze
         Number of open ports required to NUKE: 1
         RAM: 32.00GB
 ```
-root access - Do you have control over this server?
-required hacking skill
-number of open ports requred to NUKE:
+
+* connect <hostname>
+Connects you to a server 1 hop from your current location on the network
+
+```
+[home /]> connect n00dles
+Connected to n00dles
+```
+
+# 2. Inspecting a server
+
+* analyze
+Shows key stats for the current server (or sometimes accepts a hostname depending on your version/config).
+Typical things you’re looking for:
+
+  * Required hacking level
+  * Number of ports required
+  * Current security / minimum security
+  * Current money / max money
+  * RAM
+
+Example Output:
+```
+[n00dles /]> analyze
+Analyzing system...
+[||||||||||||||||||||||||||||||||||||||||||||||||||]
+n00dles: 
+Organization name: Noodle Bar
+Root Access: NO
+Can run scripts on this host: NO
+RAM: 4.00GB
+Backdoor: NO
+Required hacking skill for hack() and backdoor: 1
+Server security level: 1.000
+Chance to hack: 0.00%
+Time to hack: 49.264 seconds
+Total money available on server: $70.000k
+Required number of open ports for NUKE: 0
+SSH port: Closed
+FTP port: Closed
+SMTP port: Closed
+HTTP port: Closed
+SQL port: Closed
+[n00dles /]>
+```
+  * Rule of thumb early:
+    * If you can hack it and it has money, it’s worth using.
+    * n00dles is the classic “starter punching bag.”
 
 
