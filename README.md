@@ -366,7 +366,35 @@ export async function main(ns) {
 }
 ```
 
+VERY cool, now, lets make some decisions based on the results of the scan
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = "n00dles";
 
+  const moneyTargetPercent = 0.75;
+  const securityPadding = 5;
+
+  while (true) {
+    const moneyNow = ns.getServerMoneyAvailable(target);
+    const moneyMax = ns.getServerMaxMoney(target);
+
+    const secNow = ns.getServerSecurityLevel(target);
+    const secMin = ns.getServerMinSecurityLevel(target);
+
+    if (secNow > secMin + securityPadding) {
+      ns.print("Decision: WEAKEN");
+      await ns.weaken(target);
+    } else if (moneyNow < moneyMax * moneyTargetPercent) {
+      ns.print("Decision: GROW");
+      await ns.grow(target);
+    } else {
+      ns.print("Decision: HACK");
+      await ns.hack(target);
+    }
+  }
+}
+```
 
 Create: starter-hack.js
 
