@@ -280,7 +280,7 @@ A script running is a process with a PID.
   ```
 
 # Your first script (minimal + works)
-The first thing you should do is refer to the offical documentation for functions, properties and methods, you can do that here: https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
+At it's core, the scripts you will write use Javascript. You can learn more here: https://javascript.info/ you can also then use the extra functions that the game provides, these will normally be prepended by `ns.` and for those, you can learn about them here https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
 
 ## HelloWorld
 First, lets create the file we will run (You should do this from `home`)  
@@ -365,6 +365,8 @@ export async function main(ns) {
   }
 }
 ```
+
+
 
 Create: starter-hack.js
 
