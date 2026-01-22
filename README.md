@@ -366,7 +366,8 @@ export async function main(ns) {
 }
 ```
 
-VERY cool, now, lets make some decisions based on the results of the scan
+VERY cool, now, lets make some decisions based on the results of the scan, we'll call the script `hack_noodles.js`
+
 ```javascript
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -395,6 +396,27 @@ export async function main(ns) {
   }
 }
 ```
+
+OK! now that our script is running and doing stuff, lets learn more about what's happening!
+
+here, we can see that the script needs 2.4GB of RAM to run, since we have 8GB on the system (to start) we can run 3 iterations of the script, but hitting the same target like this may not be suppper helpful, but MAYBE if you had scripts that each did a particular thing (like, one weakens, one grows, one hacks) then you could do a type of distributed attack, especially from different servers!
+
+`mem hack_noodles.js`
+
+```
+[home /]> mem hack_noodles.js 
+This script requires 2.40GB of RAM to run for 1 thread(s)
+  1.60GB | baseCost (misc)
+  0.15GB | weaken (fn)
+  0.15GB | grow (fn)
+  0.10GB | getServerMoneyAvailable (fn)
+  0.10GB | getServerMaxMoney (fn)
+  0.10GB | getServerSecurityLevel (fn)
+  0.10GB | getServerMinSecurityLevel (fn)
+  0.10GB | hack (fn)
+[home /]> 
+```
+
 
 Create: starter-hack.js
 
