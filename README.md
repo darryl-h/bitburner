@@ -323,6 +323,26 @@ export async function main(ns) {
 }
 ```
 
+```
+[home /]> ./scan.js
+Running script with 1 thread, pid 4 and args: [].
+scan.js: === SERVER STATUS ===
+scan.js: Target: n00dles
+scan.js: Money: $1750000 / $1750000
+scan.js: Security: 1.12 (min 1.00)
+[home /]> 
+```
+
+Very cool, but we don't really want to keep running this over and over, so let's add a while loop, the while loop looks like this:
+```javascript
+while(true) {
+  do stuff
+  // wait for 2 seconds
+  await ns.sleep(2000);
+}
+```
+
+if we just add `await ns.sleep(2000);` at the end, the script will contiue to fire until we kill the process.
 
 Create: starter-hack.js
 
