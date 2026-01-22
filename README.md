@@ -97,7 +97,7 @@ Type 'help name' to learn more about the command
   ```
 
 * scan-analyze <depth>  
-  `scan-analyze <depth>` shows a tree view out to N hops. Great for “how do I reach X?”
+   The `scan-analyze` command shows the network topology and key hacking requirements for each server. `scan-analyze <depth>` shows a tree view out to N hops. Great for “how do I reach X?” It is one of the most important discovery tools in the game.
 
   Example Output:
   ```
@@ -135,7 +135,10 @@ Type 'help name' to learn more about the command
           Number of open ports required to NUKE: 1
           RAM: 32.00GB
   ```
-
+  * Root Access: If no, you must: a) meet the hacking level, b) open enough ports and c) run `nuke.exe`
+  * Required hacking skill: Your hacking level must be ≥ this number, if not, you will not be able to `hack`, `grow`, `weaken` or `nuke` the server.
+  * Number of open ports required to NUKE: This indicates the number of programs (`BruteSSH.exe` , `FTPCrack.exe`, `relaySMTP.exe` , `HTTPWorm.exe` , `SQLInject.exe` etc) programs you need to run against it
+  * RAM: More RAM, more scripts can run
 * connect <hostname>  
 `connect <hostname>` connects you to a server 1 hop from your current location on the network
 
@@ -205,10 +208,10 @@ You’ll eventually buy/create programs like:
 ## Hacking fLow
 The flow on a server that needs ports looks like:
 
-> brutessh
-> ftpcrack
-> relaysmtp
-> nuke
+1. `brutessh`
+2. `ftpcrack`
+3. `relaysmtp`
+4. `nuke`
 Root access gained on <server>
 
 Early game: many servers need 0 ports, so you can often nuke them as soon as you can reach them.
