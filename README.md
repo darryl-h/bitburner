@@ -133,19 +133,19 @@ Type 'help name' to learn more about the command
           RAM: 32.00GB
   ```
 
-* connect <hostname>
-Connects you to a server 1 hop from your current location on the network
+* connect <hostname>  
+`connect <hostname>` connects you to a server 1 hop from your current location on the network
 
-```
-[home /]> connect n00dles
-Connected to n00dles
-```
+  ```
+  [home /]> connect n00dles
+  Connected to n00dles
+  ```
 
 # 2. Inspecting a server
 
-* analyze
-Shows key stats for the current server (or sometimes accepts a hostname depending on your version/config).
-Typical things you’re looking for:
+* analyze  
+  `analyze` shows key stats for the current server (or sometimes accepts a hostname depending on your version/config).
+  Typical things you’re looking for:
 
   * Required hacking level
   * Number of ports required
@@ -153,30 +153,30 @@ Typical things you’re looking for:
   * Current money / max money
   * RAM
 
-Example Output:
-```
-[n00dles /]> analyze
-Analyzing system...
-[||||||||||||||||||||||||||||||||||||||||||||||||||]
-n00dles: 
-Organization name: Noodle Bar
-Root Access: NO
-Can run scripts on this host: NO
-RAM: 4.00GB
-Backdoor: NO
-Required hacking skill for hack() and backdoor: 1
-Server security level: 1.000
-Chance to hack: 0.00%
-Time to hack: 49.264 seconds
-Total money available on server: $70.000k
-Required number of open ports for NUKE: 0
-SSH port: Closed
-FTP port: Closed
-SMTP port: Closed
-HTTP port: Closed
-SQL port: Closed
-[n00dles /]>
-```
+  Example Output:
+  ```
+  [n00dles /]> analyze
+  Analyzing system...
+  [||||||||||||||||||||||||||||||||||||||||||||||||||]
+  n00dles: 
+  Organization name: Noodle Bar
+  Root Access: NO
+  Can run scripts on this host: NO
+  RAM: 4.00GB
+  Backdoor: NO
+  Required hacking skill for hack() and backdoor: 1
+  Server security level: 1.000
+  Chance to hack: 0.00%
+  Time to hack: 49.264 seconds
+  Total money available on server: $70.000k
+  Required number of open ports for NUKE: 0
+  SSH port: Closed
+  FTP port: Closed
+  SMTP port: Closed
+  HTTP port: Closed
+  SQL port: Closed
+  [n00dles /]>
+  ```
   * Rule of thumb early:
     * If you can hack it and it has money, it’s worth using.
     * n00dles is the classic “starter punching bag.”
