@@ -49,7 +49,9 @@ Type 'help name' to learn more about the command
     wget [url] [target file]         Retrieves code/text from a web server
 ```
 
-## scan
+## Learning whats around you
+
+### scan
 Scan's machines near you
 Example Output:
 ```
@@ -61,5 +63,45 @@ joesguns        89.6.9.7 N
 hong-fang-tea   35.4.3.5 N
 harakiri-sushi  49.6.5.6 N
 iron-gym        91.5.4.0 N
+```
+
+### scan-analyze
+This will show you more in depth information about the servers that you know about
+
+Example Output:
+```
+home /]> scan-analyze 
+┗ home
+  ┃   Root Access: YES, Required hacking skill: 1
+  ┃   Number of open ports required to NUKE: 5
+  ┃   RAM: 8.00GB
+  ┣ n00dles
+  ┃     Root Access: NO, Required hacking skill: 1
+  ┃     Number of open ports required to NUKE: 0
+  ┃     RAM: 4.00GB
+  ┣ foodnstuff
+  ┃     Root Access: NO, Required hacking skill: 1
+  ┃     Number of open ports required to NUKE: 0
+  ┃     RAM: 16.00GB
+  ┣ sigma-cosmetics
+  ┃     Root Access: NO, Required hacking skill: 5
+  ┃     Number of open ports required to NUKE: 0
+  ┃     RAM: 16.00GB
+  ┣ joesguns
+  ┃     Root Access: NO, Required hacking skill: 10
+  ┃     Number of open ports required to NUKE: 0
+  ┃     RAM: 16.00GB
+  ┣ hong-fang-tea
+  ┃     Root Access: NO, Required hacking skill: 30
+  ┃     Number of open ports required to NUKE: 0
+  ┃     RAM: 16.00GB
+  ┣ harakiri-sushi
+  ┃     Root Access: NO, Required hacking skill: 40
+  ┃     Number of open ports required to NUKE: 0
+  ┃     RAM: 16.00GB
+  ┗ iron-gym
+        Root Access: NO, Required hacking skill: 100
+        Number of open ports required to NUKE: 1
+        RAM: 32.00GB
 ```
 
