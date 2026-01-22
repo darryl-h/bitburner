@@ -72,10 +72,10 @@ Type 'help name' to learn more about the command
 Connected to home
 ```
 * `hostname` - Shows which machine you are currently connected to
-```
-[home /]> hostname
-home
-```
+  ```
+  [home /]> hostname
+  home
+  ```
 
 # 1. Learning whats around you
 * Scan 
