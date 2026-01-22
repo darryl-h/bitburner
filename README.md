@@ -67,10 +67,10 @@ Type 'help name' to learn more about the command
 # Basic Commands
 * `clear` - Clear the terminal
 * `home` - Instantly connects back to your home machine
-```
-[home /]> home
-Connected to home
-```
+  ```
+  [home /]> home
+  Connected to home
+  ```
 * `hostname` - Shows which machine you are currently connected to
   ```
   [home /]> hostname
@@ -83,14 +83,14 @@ Shows servers 1 hop away from your current host.
 
 Example Output:
   ```
-Hostname        IP       Root Access
-n00dles         90.7.6.3 N
-foodnstuff      70.4.6.8 N
-sigma-cosmetics 41.9.9.6 N
-joesguns        89.6.9.7 N
-hong-fang-tea   35.4.3.5 N
-harakiri-sushi  49.6.5.6 N
-iron-gym        91.5.4.0 N
+  Hostname        IP       Root Access
+  n00dles         90.7.6.3 N
+  foodnstuff      70.4.6.8 N
+  sigma-cosmetics 41.9.9.6 N
+  joesguns        89.6.9.7 N
+  hong-fang-tea   35.4.3.5 N
+  harakiri-sushi  49.6.5.6 N
+  iron-gym        91.5.4.0 N
   ```
 
 * scan-analyze <depth>
@@ -98,40 +98,40 @@ Shows a tree view out to N hops. Great for “how do I reach X?”
 
 Example Output:
 ```
-home /]> scan-analyze 
-┗ home
-  ┃   Root Access: YES, Required hacking skill: 1
-  ┃   Number of open ports required to NUKE: 5
-  ┃   RAM: 8.00GB
-  ┣ n00dles
-  ┃     Root Access: NO, Required hacking skill: 1
-  ┃     Number of open ports required to NUKE: 0
-  ┃     RAM: 4.00GB
-  ┣ foodnstuff
-  ┃     Root Access: NO, Required hacking skill: 1
-  ┃     Number of open ports required to NUKE: 0
-  ┃     RAM: 16.00GB
-  ┣ sigma-cosmetics
-  ┃     Root Access: NO, Required hacking skill: 5
-  ┃     Number of open ports required to NUKE: 0
-  ┃     RAM: 16.00GB
-  ┣ joesguns
-  ┃     Root Access: NO, Required hacking skill: 10
-  ┃     Number of open ports required to NUKE: 0
-  ┃     RAM: 16.00GB
-  ┣ hong-fang-tea
-  ┃     Root Access: NO, Required hacking skill: 30
-  ┃     Number of open ports required to NUKE: 0
-  ┃     RAM: 16.00GB
-  ┣ harakiri-sushi
-  ┃     Root Access: NO, Required hacking skill: 40
-  ┃     Number of open ports required to NUKE: 0
-  ┃     RAM: 16.00GB
-  ┗ iron-gym
-        Root Access: NO, Required hacking skill: 100
-        Number of open ports required to NUKE: 1
-        RAM: 32.00GB
-```
+  home /]> scan-analyze 
+  ┗ home
+    ┃   Root Access: YES, Required hacking skill: 1
+    ┃   Number of open ports required to NUKE: 5
+    ┃   RAM: 8.00GB
+    ┣ n00dles
+    ┃     Root Access: NO, Required hacking skill: 1
+    ┃     Number of open ports required to NUKE: 0
+    ┃     RAM: 4.00GB
+    ┣ foodnstuff
+    ┃     Root Access: NO, Required hacking skill: 1
+    ┃     Number of open ports required to NUKE: 0
+    ┃     RAM: 16.00GB
+    ┣ sigma-cosmetics
+    ┃     Root Access: NO, Required hacking skill: 5
+    ┃     Number of open ports required to NUKE: 0
+    ┃     RAM: 16.00GB
+    ┣ joesguns
+    ┃     Root Access: NO, Required hacking skill: 10
+    ┃     Number of open ports required to NUKE: 0
+    ┃     RAM: 16.00GB
+    ┣ hong-fang-tea
+    ┃     Root Access: NO, Required hacking skill: 30
+    ┃     Number of open ports required to NUKE: 0
+    ┃     RAM: 16.00GB
+    ┣ harakiri-sushi
+    ┃     Root Access: NO, Required hacking skill: 40
+    ┃     Number of open ports required to NUKE: 0
+    ┃     RAM: 16.00GB
+    ┗ iron-gym
+          Root Access: NO, Required hacking skill: 100
+          Number of open ports required to NUKE: 1
+          RAM: 32.00GB
+  ```
 
 * connect <hostname>
 Connects you to a server 1 hop from your current location on the network
