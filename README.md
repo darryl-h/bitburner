@@ -283,23 +283,46 @@ A script running is a process with a PID.
 The first thing you should do is refer to the offical documentation for functions, properties and methods, you can do that here: https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
 
 ## HelloWorld
-First, lets create the file we will run (You should do this from `home`)
-`vim helloworld.js`
-Now, lets add the content
+First, lets create the file we will run (You should do this from `home`)  
+`vim helloworld.js`  
+Now, lets add the content  
 
 ```javascript
 /** @param {NS} ns */
 export async function main(ns) {
 ns.tprint("Hello World!")
 }
-```
-Go back to the terminal
-Run the script
+```  
+Go back to the terminal  
+Run the script  
 ```
 [home /]> ./helloworld.js 
 Running script with 1 thread, pid 3 and args: [].
 helloworld.js: Hello World!
 ```
+
+Cool, now lets learn more about a target!
+
+`vim scan.js`
+
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = "n00dles";
+
+  const moneyNow = ns.getServerMoneyAvailable(target);
+  const moneyMax = ns.getServerMaxMoney(target);
+
+  const secNow = ns.getServerSecurityLevel(target);
+  const secMin = ns.getServerMinSecurityLevel(target);
+
+  ns.tprint("=== SERVER STATUS ===");
+  ns.tprint(`Target: ${target}`);
+  ns.tprint(`Money: $${Math.floor(moneyNow)} / $${Math.floor(moneyMax)}`);
+  ns.tprint(`Security: ${secNow.toFixed(2)} (min ${secMin.toFixed(2)})`);
+}
+```
+
 
 Create: starter-hack.js
 
