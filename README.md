@@ -417,6 +417,7 @@ This script requires 2.40GB of RAM to run for 1 thread(s)
 [home /]> 
 ```
 
+Now, if you want to see the decisions being made, you can use the `tail` command (IE: `tail hack_noodles.js`) and you can also `tail` a `PID` if you have multiple copies of the script running
 
 Create: starter-hack.js
 
