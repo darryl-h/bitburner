@@ -78,8 +78,8 @@ Type 'help name' to learn more about the command
   ```
 
 # 1. Learning whats around you
-* Scan 
-  Shows servers 1 hop away from your current host.
+* Scan  
+  `scan` shows servers 1 hop away from your current host.
 
   Example Output:
   ```
@@ -93,8 +93,8 @@ Type 'help name' to learn more about the command
   iron-gym        91.5.4.0 N
   ```
 
-* scan-analyze <depth>
-  Shows a tree view out to N hops. Great for “how do I reach X?”
+* scan-analyze <depth>  
+  `scan-analyze <depth>` shows a tree view out to N hops. Great for “how do I reach X?”
 
   Example Output:
   ```
