@@ -283,8 +283,22 @@ A script running is a process with a PID.
 The first thing you should do is refer to the offical documentation for functions, properties and methods, you can do that here: https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
 
 ## HelloWorld
+First, lets create the file we will run (You should do this from `home`)
+`vim helloworld.js`
+Now, lets add the content
+
 ```javascript
-ns.tprint("Hello World!");
+/** @param {NS} ns */
+export async function main(ns) {
+ns.tprint("Hello World!")
+}
+```
+Go back to the terminal
+Run the script
+```
+[home /]> ./helloworld.js 
+Running script with 1 thread, pid 3 and args: [].
+helloworld.js: Hello World!
 ```
 
 Create: starter-hack.js
