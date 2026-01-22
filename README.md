@@ -1,3 +1,18 @@
+# Game Overview
+At a high level:
+* You are connected to a server (starts at home).
+* Servers have:
+  * Money (you want it)
+  * Security (higher = slower + harder)
+  * RAM (lets you run more scripts later)
+  * Root access (needed to run scripts on them)
+* The core hacking loop is:
+  * weaken → lower security
+  * grow → increase money available
+  * hack → steal money
+* Early game: you do most things manually in the Terminal.
+* Then you automate with scripts (Netscript JS): ns.hack(), ns.grow(), ns.weaken()
+
 # Basic
 ## help (RTFM)
 ```
@@ -104,4 +119,8 @@ home /]> scan-analyze
         Number of open ports required to NUKE: 1
         RAM: 32.00GB
 ```
+root access - Do you have control over this server?
+required hacking skill
+number of open ports requred to NUKE:
+
 
