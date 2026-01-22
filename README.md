@@ -342,7 +342,29 @@ while(true) {
 }
 ```
 
-if we just add `await ns.sleep(2000);` at the end, the script will contiue to fire until we kill the process.
+The resulting script should look something like this (notice we are printing to the logs (`print`) and not the terminal (`tprint`)!:
+
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = "n00dles";
+
+  while (true) {
+    const moneyNow = ns.getServerMoneyAvailable(target);
+    const moneyMax = ns.getServerMaxMoney(target);
+
+    const secNow = ns.getServerSecurityLevel(target);
+    const secMin = ns.getServerMinSecurityLevel(target);
+
+    ns.clearLog();
+    ns.print(`Target: ${target}`);
+    ns.print(`Money: $${Math.floor(moneyNow)} / $${Math.floor(moneyMax)}`);
+    ns.print(`Security: ${secNow.toFixed(2)} (min ${secMin.toFixed(2)})`);
+
+    await ns.sleep(2000);
+  }
+}
+```
 
 Create: starter-hack.js
 
