@@ -280,6 +280,13 @@ A script running is a process with a PID.
   ```
 
 # Your first script (minimal + works)
+The first thing you should do is refer to the offical documentation for functions, properties and methods, you can do that here: https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
+
+## HelloWorld
+```javascript
+ns.tprint("Hello World!");
+```
+
 Create: starter-hack.js
 
 In terminal:
