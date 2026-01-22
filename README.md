@@ -79,9 +79,9 @@ Type 'help name' to learn more about the command
 
 # 1. Learning whats around you
 * Scan 
-Shows servers 1 hop away from your current host.
+  Shows servers 1 hop away from your current host.
 
-Example Output:
+  Example Output:
   ```
   Hostname        IP       Root Access
   n00dles         90.7.6.3 N
@@ -94,10 +94,10 @@ Example Output:
   ```
 
 * scan-analyze <depth>
-Shows a tree view out to N hops. Great for “how do I reach X?”
+  Shows a tree view out to N hops. Great for “how do I reach X?”
 
-Example Output:
-```
+  Example Output:
+  ```
   home /]> scan-analyze 
   ┗ home
     ┃   Root Access: YES, Required hacking skill: 1
