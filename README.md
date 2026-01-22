@@ -13,8 +13,7 @@ At a high level:
 * Early game: you do most things manually in the Terminal.
 * Then you automate with scripts (Netscript JS): ns.hack(), ns.grow(), ns.weaken()
 
-# Basic
-## help (RTFM)
+# Terminal Command Help
 ```
 Type 'help name' to learn more about the command 
  
@@ -63,6 +62,22 @@ Type 'help name' to learn more about the command
     weaken                           Reduce the security of the current machine
     wget [url] [target file]         Retrieves code/text from a web server
 ```
+* `help <command>` will give you more help for that command
+
+# Basic Commands
+* `clear` - Clear the terminal
+* `home` - Instantly connects back to your home machine
+```
+[home /]> home
+Connected to home
+```
+* `hostname` - Shows which machine you are currently connected to
+```
+[home /]> hostname
+home
+```
+
+
 
 ## Learning whats around you
 
