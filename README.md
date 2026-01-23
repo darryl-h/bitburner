@@ -45,13 +45,23 @@
     - [Recap](#recap)
       - [Intermediate Takeaway](#intermediate-takeaway)
 - [Scripting 301](#scripting-301)
-
-
-
-You can play the game online here: 
-https://bitburner-official.github.io/
+  - [Pool all RAM across all servers (find free capacity)](#pool-all-ram-across-all-servers-find-free-capacity)
+    - [Add a “RAM dashboard” script](#add-a-ram-dashboard-script)
+  - [“Rootkit deploy tool” (auto-root + copy scripts everywhere)](#rootkit-deploy-tool-auto-root--copy-scripts-everywhere)
+    - [Better efficiency logic (best use of resources)](#better-efficiency-logic-best-use-of-resources)
+      - [Pick the best target automatically](#pick-the-best-target-automatically)
+      - [Allocate threads where they matter](#allocate-threads-where-they-matter)
+      - [Don’t “HGW randomly” — do “prep then farm”](#dont-hgw-randomly--do-prep-then-farm)
+  - [Extra “advanced but still approachable” ideas](#extra-advanced-but-still-approachable-ideas)
+    - [A “single command” runner](#a-single-command-runner)
+    - [A “server inventory” view](#a-server-inventory-view)
+    - [Safety: prevent duplicate controllers](#safety-prevent-duplicate-controllers)
+    - [Introduce purchased servers (later)](#introduce-purchased-servers-later)
 
 # Basic Gameplay
+
+You can play the game online here: https://bitburner-official.github.io/
+
 
 ## Target Audience
 
@@ -872,3 +882,236 @@ We are ready to move on when:
 * We want to answer “where should this script run?”
 
 # Scripting 301
+This section contains spoilers! The goal of these is to give you goals to progress to
+
+## Pool all RAM across all servers (find free capacity)
+
+Goal
+
+At any moment, you want to know:
+
+* total RAM across all rooted servers
+* used vs free RAM
+* which servers have enough space to run another worker script
+
+### Add a “RAM dashboard” script
+
+Create `ram_report.js`:
+
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const start = "home";
+  const seen = new Set([start]);
+  const queue = [start];
+
+  const rows = [];
+
+  while (queue.length) {
+    const host = queue.shift();
+    for (const next of ns.scan(host)) {
+      if (!seen.has(next)) {
+        seen.add(next);
+        queue.push(next);
+      }
+    }
+
+    if (!ns.hasRootAccess(host)) continue;
+
+    const max = ns.getServerMaxRam(host);
+    const used = ns.getServerUsedRam(host);
+    const free = max - used;
+
+    rows.push({ host, max, used, free });
+  }
+
+  rows.sort((a, b) => b.free - a.free);
+
+  let totalMax = 0, totalUsed = 0;
+
+  ns.tprint("HOST                MAX     USED    FREE");
+  ns.tprint("------------------------------------------------");
+  for (const r of rows) {
+    totalMax += r.max;
+    totalUsed += r.used;
+    ns.tprint(
+      `${r.host.padEnd(18)} ${r.max.toFixed(2).padStart(6)}  ${r.used.toFixed(2).padStart(6)}  ${r.free.toFixed(2).padStart(6)}`
+    );
+  }
+  ns.tprint("------------------------------------------------");
+  ns.tprint(`TOTAL               ${totalMax.toFixed(2)}  ${totalUsed.toFixed(2)}  ${(totalMax-totalUsed).toFixed(2)}`);
+}
+```
+
+Usage:  
+`run ram_report.js`  
+
+We can now make our controller smart: “find the server with the most free RAM and run workers there.”
+
+## “Rootkit deploy tool” (auto-root + copy scripts everywhere)
+
+There are two deployment problems:
+
+* Gaining root (depends on hacking level + number of cracking programs you own)
+* Copying scripts to servers you control (easy once you have root)
+
+So your deploy tool should:
+
+* discover all servers
+* attempt to gain root where possible
+* copy your standard scripts (hack.js, grow.js, weaken.js, controllers, etc.)
+
+A practical “deploy everything” script
+
+Create `deploy_all.js`:
+
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const start = "home";
+  const seen = new Set([start]);
+  const queue = [start];
+
+  // scripts you want everywhere
+  const payload = ["hack.js", "grow.js", "weaken.js", "controller.js", "ram_report.js"];
+
+  // available port openers (depends on programs you own)
+  const openers = [
+    { file: "BruteSSH.exe", fn: (host) => ns.brutessh(host) },
+    { file: "FTPCrack.exe", fn: (host) => ns.ftpcrack(host) },
+    { file: "relaySMTP.exe", fn: (host) => ns.relaysmtp(host) },
+    { file: "HTTPWorm.exe", fn: (host) => ns.httpworm(host) },
+    { file: "SQLInject.exe", fn: (host) => ns.sqlinject(host) },
+  ];
+
+  const have = openers.filter(o => ns.fileExists(o.file, "home"));
+
+  while (queue.length) {
+    const host = queue.shift();
+    for (const next of ns.scan(host)) {
+      if (!seen.has(next)) {
+        seen.add(next);
+        queue.push(next);
+      }
+    }
+  }
+
+  for (const host of [...seen]) {
+    if (host === "home") continue;
+
+    // Try to root if we don't have it
+    if (!ns.hasRootAccess(host)) {
+      const reqPorts = ns.getServerNumPortsRequired(host);
+      const reqHack = ns.getServerRequiredHackingLevel(host);
+
+      if (ns.getHackingLevel() < reqHack) {
+        ns.tprint(`[SKIP] ${host}: need hack ${reqHack}`);
+        continue;
+      }
+      if (have.length < reqPorts) {
+        ns.tprint(`[SKIP] ${host}: need ${reqPorts} port openers, you have ${have.length}`);
+        continue;
+      }
+
+      // open required ports, then nuke
+      try {
+        for (let i = 0; i < reqPorts; i++) have[i].fn(host);
+        ns.nuke(host);
+        ns.tprint(`[ROOT] ${host}`);
+      } catch (e) {
+        ns.tprint(`[FAIL] ${host}: ${String(e)}`);
+        continue;
+      }
+    }
+
+    // Once rooted, copy scripts
+    try {
+      await ns.scp(payload, host);
+      ns.tprint(`[COPY] ${host}: ${payload.length} files`);
+    } catch (e) {
+      ns.tprint(`[FAIL] SCP to ${host}: ${String(e)}`);
+    }
+  }
+}
+```
+
+Usage:  
+`run deploy_all.js`
+
+Why this is awesome for players: it turns “ugh admin chores” into one command. Also makes your repo feel like a real toolkit.
+
+### Better efficiency logic (best use of resources)
+
+This is where “advanced” actually begins.
+
+There are three big upgrades:
+
+#### Pick the best target automatically
+
+Instead of hardcoding n00dles, evaluate targets.
+
+A simple scoring heuristic:
+
+* ignore servers with maxMoney = 0
+* prefer high money
+* prefer fast hack time
+* prefer good success chance
+
+Example score:  
+`score = (maxMoney * hackChance) / hackTime`
+
+Then pick highest score you can currently hack.
+
+#### Allocate threads where they matter
+
+Once you can measure free RAM (Section 1), you can:
+
+* compute threads per worker per host
+* avoid wasting 0.3GB leftovers everywhere
+* distribute work without spamming the same server with random scripts
+
+#### Don’t “HGW randomly” — do “prep then farm”
+
+A common efficiency pattern:
+* Prep phase: bring security to min, money to max
+* Farm phase: repeat hack/grow/weaken in a controlled ratio
+
+Even without true batching, this stabilizes income a lot.
+
+## Extra “advanced but still approachable” ideas
+### A “single command” runner
+
+Make start.js that does:
+
+* deploy_all
+* choose best target
+* start controllers on best available worker servers
+
+This gives the player a “game loop button.”
+
+### A “server inventory” view
+
+Make servers_report.js listing:
+
+* rooted?
+* required hack level
+* required ports
+* max money
+* min security
+* RAM
+Sorted by “can I own this soon?”  
+
+This becomes your roadmap.
+
+### Safety: prevent duplicate controllers
+
+Teach a rule in code:
+
+* controller checks if another controller is already running (ns.ps(host))
+* if yes, don’t launch a second one
+
+That prevents beginners from accidentally tanking their own efficiency.
+
+### Introduce purchased servers (later)
+
+Once they start buying servers, your deploy tool becomes even more valuable, because you treat purchased servers like workers.
