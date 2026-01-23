@@ -1,6 +1,18 @@
 You can play the game online here: 
 https://bitburner-official.github.io/
 
+# Target Audience
+
+This guide assumes:
+- You are new to Bitburner
+- You have a *general* sense of coding or scripting
+- You are **not** a JavaScript expert
+
+The goal is not to give you “optimal” scripts, but to help you understand:
+- How the game works
+- Why scripts behave the way they do
+- How to progress from manual hacking to automation
+
 # Game Overview
 At a high level:
 * You are connected to a server (starts at home).
