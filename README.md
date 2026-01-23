@@ -305,13 +305,13 @@ Bitburner lets you manually run the “big three” in the terminal:
 
 A simple manual loop:
 
-> weaken n00dles
-(wait)
-> grow n00dles
-(wait)
-> hack n00dles
-(wait)
-(repeat)
+> weaken n00dles  
+(wait)  
+> grow n00dles  
+(wait)  
+> hack n00dles  
+(wait)  
+(repeat)  
 
 Practical loop (easy mode):
 
