@@ -358,6 +358,11 @@ export async function main(ns) {
   ns.tprint(`Security: ${secNow.toFixed(2)} (min ${secMin.toFixed(2)})`);
 }
 ```
+* Why `Math.floor()`?
+  Money values are floating-point numbers internally (e.g. 45321.8429).  
+  We round down for readability and to avoid showing money that doesn’t really exist.  
+  
+  Security is shown with decimals because small changes matter.
 
 ```
 [home /]> ./scan.js
