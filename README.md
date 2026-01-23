@@ -1,7 +1,59 @@
+- [Basic Gameplay](#basic-gameplay)
+  - [Target Audience](#target-audience)
+  - [Game Overview](#game-overview)
+  - [Game Concepts](#game-concepts)
+    - [Scripts vs Programs (Important)](#scripts-vs-programs-important)
+    - [A note on JavaScript vs Bitburner functions](#a-note-on-javascript-vs-bitburner-functions)
+  - [Terminal Commands](#terminal-commands)
+    - [Help](#help)
+    - [Basic Commands](#basic-commands)
+      - [Learning whats around you](#learning-whats-around-you)
+      - [Inspecting a server](#inspecting-a-server)
+- [Manual Hacking](#manual-hacking)
+  - [Manual hacking commands (before scripting)](#manual-hacking-commands-before-scripting)
+  - [Opening ports on target machines](#opening-ports-on-target-machines)
+- [Scripting 101](#scripting-101)
+  - [Files \& editor (so you can start scripting)](#files--editor-so-you-can-start-scripting)
+  - [Running scripts (the “process” model)](#running-scripts-the-process-model)
+  - [Your first script](#your-first-script)
+    - [HelloWorld](#helloworld)
+    - [Scan Server](#scan-server)
+    - [Scan Server (While Loop)](#scan-server-while-loop)
+    - [Rudamentry Hacking Script 1](#rudamentry-hacking-script-1)
+      - [Upgrade the script: “HGW” (Hack/Grow/Weaken)](#upgrade-the-script-hgw-hackgrowweaken)
+    - [Rudamentry Hacking Script 2](#rudamentry-hacking-script-2)
+    - [Memory Management](#memory-management)
+  - [Where to go from here (skill-building roadmap)](#where-to-go-from-here-skill-building-roadmap)
+  - [Common beginner mistakes](#common-beginner-mistakes)
+  - [Cheat Sheet](#cheat-sheet)
+    - [Navigation](#navigation)
+    - [Inspect](#inspect)
+    - [Rooting](#rooting)
+    - [Files](#files)
+    - [Scripts](#scripts)
+- [Scripting 201](#scripting-201)
+  - [Intermediate Goal](#intermediate-goal)
+    - [Running scripts on another server](#running-scripts-on-another-server)
+      - [Mini exercise: “Hello from over there”](#mini-exercise-hello-from-over-there)
+    - [Why “do everything” scripts don’t scale](#why-do-everything-scripts-dont-scale)
+    - [Introduce single-purpose worker scripts](#introduce-single-purpose-worker-scripts)
+      - [Worker scripts](#worker-scripts)
+      - [Mini exercise: use workers manually](#mini-exercise-use-workers-manually)
+    - [Introduce the idea of a “controller”](#introduce-the-idea-of-a-controller)
+    - [A very simple controller (single worker)](#a-very-simple-controller-single-worker)
+    - [Expanding to multiple workers (still simple)](#expanding-to-multiple-workers-still-simple)
+    - [Recap](#recap)
+      - [Intermediate Takeaway](#intermediate-takeaway)
+- [Scripting 301](#scripting-301)
+
+
+
 You can play the game online here: 
 https://bitburner-official.github.io/
 
-# Target Audience
+# Basic Gameplay
+
+## Target Audience
 
 This guide assumes:
 - You are new to Bitburner
@@ -13,7 +65,7 @@ The goal is not to give you “optimal” scripts, but to help you understand:
 - Why scripts behave the way they do
 - How to progress from manual hacking to automation
 
-# Game Overview
+## Game Overview
 At a high level:
 * You are connected to a server (starts at home).
 * Servers have:
@@ -28,8 +80,8 @@ At a high level:
 * Early game: you do most things manually in the Terminal.
 * Then you automate with scripts (Netscript JS): ns.hack(), ns.grow(), ns.weaken()
 
-# Game Concepts
-## Scripts vs Programs (Important)
+## Game Concepts
+### Scripts vs Programs (Important)
 
 - **Scripts** (`.js`) are written by you using JavaScript.
 - **Programs** (`.exe`) are tools you buy or create (BruteSSH, FTPCrack, NUKE, etc).
@@ -40,7 +92,7 @@ You write scripts.
 Programs are used to gain access to servers.
 Scripts are used to automate hacking.
 
-## A note on JavaScript vs Bitburner functions
+### A note on JavaScript vs Bitburner functions
 
 Bitburner scripts are written in JavaScript.
 
@@ -52,7 +104,9 @@ You don’t need to know much JavaScript to start — we’ll introduce concepts
 You can learn more about JavaScript here: https://javascript.info/  
 You can learn more about NetScript/BitBurner here https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
 
-# Terminal Command Help
+## Terminal Commands
+
+### Help
 ```
 Type 'help name' to learn more about the command 
  
@@ -103,7 +157,7 @@ Type 'help name' to learn more about the command
 ```
 * `help <command>` will give you more help for that command
 
-# Basic Commands
+### Basic Commands
 * `clear` - Clear the terminal
 * `home` - Instantly connects back to your home machine
   ```
@@ -116,7 +170,7 @@ Type 'help name' to learn more about the command
   home
   ```
 
-# 1. Learning whats around you
+#### Learning whats around you
 * Scan  
   `scan` shows servers 1 hop away from your current host.
 
@@ -183,7 +237,7 @@ Type 'help name' to learn more about the command
   Connected to n00dles
   ```
 
-# 2. Inspecting a server
+#### Inspecting a server
 
 * analyze  
   `analyze` shows key stats for the current server (or sometimes accepts a hostname depending on your version/config).
@@ -223,34 +277,13 @@ Type 'help name' to learn more about the command
     * If you can hack it and it has money, it’s worth using.
     * n00dles is the classic “starter punching bag.”
 
-# 3. Getting administrative access to a server (Getting root)
+# Manual Hacking
 
 To run scripts on a server, you usually need:
 
 * Enough hacking level
 * Enough open ports (done by running cracking programs)
 * Then run NUKE.exe
-
-## Common cracking programs
-
-You’ll eventually buy/create programs like:
-
-* BruteSSH.exe
-* FTPCrack.exe
-* relaySMTP.exe
-* HTTPWorm.exe
-* SQLInject.exe
-
-## Hacking fLow
-The flow on a server that needs ports looks like:
-
-1. `brutessh`
-2. `ftpcrack`
-3. `relaysmtp`
-4. `nuke`
-Root access gained on <server>
-
-Early game: many servers need 0 ports, so you can often nuke them as soon as you can reach them.
 
 ## Manual hacking commands (before scripting)
 
@@ -275,6 +308,20 @@ Practical loop (easy mode):
 * If money is low → grow
 * If security is high → weaken
 * Otherwise → hack
+
+## Opening ports on target machines
+
+Eventually, you will need to open ports on a target machine before you can control it. You will need to buy and use programs like:
+
+* BruteSSH.exe
+* FTPCrack.exe
+* relaySMTP.exe
+* HTTPWorm.exe
+* SQLInject.exe
+
+Early game: many servers need 0 ports, so you can often nuke them as soon as you can reach them.
+
+# Scripting 101
 
 ## Files & editor (so you can start scripting)
 * `ls` - Lists files on the current server.
@@ -315,10 +362,10 @@ A script running is a process with a PID.
   > tail starter-hack.js
   ```
 
-# Your first script (minimal + works)
+## Your first script
 At it's core, the scripts you will write use Javascript. 
 
-## HelloWorld
+### HelloWorld
 First, lets create the file we will run (You should do this from `home`)  
 `vim helloworld.js`  
 Now, lets add the content  
@@ -336,7 +383,7 @@ Run the script
 Running script with 1 thread, pid 3 and args: [].
 helloworld.js: Hello World!
 ```
-
+### Scan Server
 Cool, now lets learn more about a target!
 
 `vim scan.js`
@@ -373,7 +420,7 @@ scan.js: Money: $1750000 / $1750000
 scan.js: Security: 1.12 (min 1.00)
 [home /]> 
 ```
-
+### Scan Server (While Loop)
 Very cool, but we don't really want to keep running this over and over, so let's add a while loop, the while loop looks like this:
 ```javascript
 while(true) {
@@ -406,61 +453,7 @@ export async function main(ns) {
   }
 }
 ```
-
-VERY cool, now, lets make some decisions based on the results of the scan, we'll call the script `hack_noodles.js`
-
-```javascript
-/** @param {NS} ns **/
-export async function main(ns) {
-  const target = "n00dles";
-
-  const moneyTargetPercent = 0.75;
-  const securityPadding = 5;
-
-  while (true) {
-    const moneyNow = ns.getServerMoneyAvailable(target);
-    const moneyMax = ns.getServerMaxMoney(target);
-
-    const secNow = ns.getServerSecurityLevel(target);
-    const secMin = ns.getServerMinSecurityLevel(target);
-
-    if (secNow > secMin + securityPadding) {
-      ns.print("Decision: WEAKEN");
-      await ns.weaken(target);
-    } else if (moneyNow < moneyMax * moneyTargetPercent) {
-      ns.print("Decision: GROW");
-      await ns.grow(target);
-    } else {
-      ns.print("Decision: HACK");
-      await ns.hack(target);
-    }
-  }
-}
-```
-
-OK! now that our script is running and doing stuff, lets learn more about what's happening!
-
-here, we can see that the script needs 2.4GB of RAM to run, since we have 8GB on the system (to start) we can run 3 iterations of the script, but hitting the same target like this may not be suppper helpful, but MAYBE if you had scripts that each did a particular thing (like, one weakens, one grows, one hacks) then you could do a type of distributed attack, especially from different servers!
-
-`mem hack_noodles.js`
-
-```
-[home /]> mem hack_noodles.js 
-This script requires 2.40GB of RAM to run for 1 thread(s)
-  1.60GB | baseCost (misc)
-  0.15GB | weaken (fn)
-  0.15GB | grow (fn)
-  0.10GB | getServerMoneyAvailable (fn)
-  0.10GB | getServerMaxMoney (fn)
-  0.10GB | getServerSecurityLevel (fn)
-  0.10GB | getServerMinSecurityLevel (fn)
-  0.10GB | hack (fn)
-[home /]> 
-```
-
-Now, if you want to see the decisions being made, you can use the `tail` command (IE: `tail hack_noodles.js`) and you can also `tail` a `PID` if you have multiple copies of the script running
-
-## Another solution (Probably worse than the last one)
+### Rudamentry Hacking Script 1
 
 This script only hacks, it ignores security and money.
 
@@ -496,7 +489,7 @@ Running script with pid 1
 
 What you’ll notice: security climbs and income eventually gets worse. That’s expected—this is why you add grow/weaken.
 
-## Upgrade the script: “HGW” (Hack/Grow/Weaken)
+#### Upgrade the script: “HGW” (Hack/Grow/Weaken)
 
 Replace your file with this “baby brain” loop:
 
@@ -530,6 +523,61 @@ This uses the “obvious” checks:
 * security now vs min
 
 It’s not “optimal batching” (that comes later), but it prints money and levels you up and teaches the loop.
+
+### Rudamentry Hacking Script 2
+VERY cool, now, lets make some decisions based on the results of the scan, we'll call the script `hack_noodles.js`
+
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = "n00dles";
+
+  const moneyTargetPercent = 0.75;
+  const securityPadding = 5;
+
+  while (true) {
+    const moneyNow = ns.getServerMoneyAvailable(target);
+    const moneyMax = ns.getServerMaxMoney(target);
+
+    const secNow = ns.getServerSecurityLevel(target);
+    const secMin = ns.getServerMinSecurityLevel(target);
+
+    if (secNow > secMin + securityPadding) {
+      ns.print("Decision: WEAKEN");
+      await ns.weaken(target);
+    } else if (moneyNow < moneyMax * moneyTargetPercent) {
+      ns.print("Decision: GROW");
+      await ns.grow(target);
+    } else {
+      ns.print("Decision: HACK");
+      await ns.hack(target);
+    }
+  }
+}
+```
+### Memory Management
+
+OK! now that our script is running and doing stuff, lets learn more about what's happening!
+
+here, we can see that the script needs 2.4GB of RAM to run, since we have 8GB on the system (to start) we can run 3 iterations of the script, but hitting the same target like this may not be suppper helpful, but MAYBE if you had scripts that each did a particular thing (like, one weakens, one grows, one hacks) then you could do a type of distributed attack, especially from different servers!
+
+`mem hack_noodles.js`
+
+```
+[home /]> mem hack_noodles.js 
+This script requires 2.40GB of RAM to run for 1 thread(s)
+  1.60GB | baseCost (misc)
+  0.15GB | weaken (fn)
+  0.15GB | grow (fn)
+  0.10GB | getServerMoneyAvailable (fn)
+  0.10GB | getServerMaxMoney (fn)
+  0.10GB | getServerSecurityLevel (fn)
+  0.10GB | getServerMinSecurityLevel (fn)
+  0.10GB | hack (fn)
+[home /]> 
+```
+
+Now, if you want to see the decisions being made, you can use the `tail` command (IE: `tail hack_noodles.js`) and you can also `tail` a `PID` if you have multiple copies of the script running
 
 ## Where to go from here (skill-building roadmap)
 
@@ -566,15 +614,261 @@ Use analysis functions like hackAnalyze etc. (later)
 - Thinking scripts are bought instead of written
 - Ignoring RAM usage until scripts fail to start
 
-# Cheat Sheet
-## Navigation
+## Cheat Sheet
+### Navigation
 `home`, `scan`, `scan-analyze 2`, `connect X`, `hostname`
-## Inspect
+### Inspect
 `analyze`
-## Rooting
+### Rooting
 run port crackers (when you have them), then `NUKE.exe`
-## Files
+### Files
 `ls`, `nano file.js`, `cat file.js`
-## Scripts
+### Scripts
 `run file.js [-t N] [args...]`
 `ps`, `tail <pid>`, `kill <pid>`, `killall`
+
+# Scripting 201
+Up to this point, you’ve written scripts that:
+
+* run on one server
+* make decisions locally
+* use only the RAM of that server
+
+This works, but it doesn’t scale.
+
+Lets figure out how to use multiple servers together, without jumping straight into advanced scheduling or batching.
+
+The key shift at this level is:
+
+Stop thinking “one script does everything.”
+Start thinking “many simple scripts, coordinated on purpose.”
+
+## Intermediate Goal
+
+By the end of this section, we should understand how to:
+
+* run scripts on other servers
+* separate decision-making from work
+* avoid scripts fighting each other
+* think in terms of roles, not just files
+
+No math-heavy batching yet, No perfect timing, Just coordination.
+
+### Running scripts on another server
+
+So far, we used:  
+
+`run script.js`
+
+That always runs the script on the server you’re connected to.
+
+New function  
+`ns.exec(script, host, threads, args...)`
+
+This runs a script on another server if:
+* you have root access
+* the script exists on that server
+* it has enough RAM
+
+#### Mini exercise: “Hello from over there”
+
+Create `remote_hello.js`:
+
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  ns.tprint(`Hello from ${ns.getHostname()}`);
+}
+```
+
+Copy it:  
+`scp remote_hello.js foodnstuff`
+
+Run it remotely:
+```
+run remote_hello.js
+exec remote_hello.js foodnstuff 1
+```
+
+Expected result:
+
+* One message says Hello from home
+* One message says Hello from foodnstuff
+
+We now understand that scripts know where they’re running.
+
+### Why “do everything” scripts don’t scale
+Right now, the old scripts:
+
+* decides what to do
+* runs hack/grow/weaken
+* repeats forever
+
+If you run this script on multiple servers, each one:
+
+* makes its own decisions
+* changes money/security independently
+* interferes with the others
+
+This is why income often gets worse when you “just run more scripts.”
+
+### Introduce single-purpose worker scripts
+
+The fix is to make scripts that:
+* do one thing
+* do it once
+* then exit
+
+#### Worker scripts
+`weaken.js`
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = ns.args[0];
+  await ns.weaken(target);
+}
+```
+
+`grow.js`
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = ns.args[0];
+  await ns.grow(target);
+}
+```
+
+`hack.js`
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = ns.args[0];
+  await ns.hack(target);
+}
+```
+
+These scripts:
+
+* don’t loop
+* don’t decide
+* don’t interfere
+
+They are _tools_, not brains.
+
+#### Mini exercise: use workers manually
+From `home`:
+```
+scp hack.js grow.js weaken.js foodnstuff
+exec weaken.js foodnstuff 1 n00dles
+```
+
+Watch:
+
+* security drop
+* script exit
+* RAM free itself
+
+We now understand short-lived scripts and remote execution.
+
+### Introduce the idea of a “controller”
+
+Now that we have:
+
+* scripts that do work
+* scripts that can run anywhere
+
+We need one place that decides what should happen.
+
+This script:
+
+* never hacks directly
+* never grows directly
+* only tells workers what to do
+
+This is the controller pattern.
+
+### A very simple controller (single worker)
+
+Create `controller_basic.js`:
+
+```javascript
+/** @param {NS} ns **/
+export async function main(ns) {
+  const target = "n00dles";
+  const worker = "foodnstuff";
+
+  while (true) {
+    const moneyNow = ns.getServerMoneyAvailable(target);
+    const moneyMax = ns.getServerMaxMoney(target);
+
+    const secNow = ns.getServerSecurityLevel(target);
+    const secMin = ns.getServerMinSecurityLevel(target);
+
+    if (secNow > secMin + 5) {
+      ns.exec("weaken.js", worker, 1, target);
+    } else if (moneyNow < moneyMax * 0.75) {
+      ns.exec("grow.js", worker, 1, target);
+    } else {
+      ns.exec("hack.js", worker, 1, target);
+    }
+
+    await ns.sleep(2000);
+  }
+}
+```
+
+We will run it from `home`.
+
+We now understand:
+
+* decisions happen in one place
+* workers act on command
+* scripts no longer fight each other
+
+### Expanding to multiple workers (still simple)
+
+Now add more worker servers:
+
+```
+const workers = ["foodnstuff", "sigma-cosmetics"];
+```
+
+Then loop over them:
+```javascript
+for (const w of workers) {
+  ns.exec("weaken.js", w, 1, target);
+}
+```
+
+We now understand that only one controller per target and if two controllers target the same server, you’re back to chaos.
+
+### Recap
+
+We've learned:
+* separation of concerns
+* distributed work
+* centralized control
+* why RAM pooling matters later
+* why batching exists (even though you’re not doing it yet)
+
+What we are intentionally not doing yet, we are not:
+* calculating exact thread counts
+* aligning action finish times
+* batching
+* optimizing hack percentages
+
+Those require everything we've just learned.
+
+#### Intermediate Takeaway
+
+*** Intermediate automation is not about speed — it’s about coordination. ***
+
+Once coordination clicks, efficiency becomes possible.
+
+We are ready to move on when:
+
+* We instinctively separate “decision” and “work”
+* We care where RAM lives
+* We want to answer “where should this script run?”
+
+# Scripting 301
