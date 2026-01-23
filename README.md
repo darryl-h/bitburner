@@ -460,6 +460,10 @@ This script requires 2.40GB of RAM to run for 1 thread(s)
 
 Now, if you want to see the decisions being made, you can use the `tail` command (IE: `tail hack_noodles.js`) and you can also `tail` a `PID` if you have multiple copies of the script running
 
+## Another solution (Probably worse than the last one)
+
+This script only hacks, it ignores security and money.
+
 Create: starter-hack.js
 
 In terminal:
@@ -554,6 +558,13 @@ Better target selection
 Choose targets by “max money / hack time / success chance”
 
 Use analysis functions like hackAnalyze etc. (later)
+
+## Common beginner mistakes
+
+- Running many hack scripts without coordination (security explodes, income drops)
+- Forgetting that each script instance has its own PID and log
+- Thinking scripts are bought instead of written
+- Ignoring RAM usage until scripts fail to start
 
 # Cheat Sheet
 ## Navigation
