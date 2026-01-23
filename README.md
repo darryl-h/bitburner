@@ -49,7 +49,7 @@ Bitburner scripts are written in JavaScript.
 
 You don’t need to know much JavaScript to start — we’ll introduce concepts as we use them.
 
-You can learn more about JavaScript here: https://javascript.info/ 
+You can learn more about JavaScript here: https://javascript.info/  
 You can learn more about NetScript/BitBurner here https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
 
 # Terminal Command Help
