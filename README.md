@@ -28,6 +28,30 @@ At a high level:
 * Early game: you do most things manually in the Terminal.
 * Then you automate with scripts (Netscript JS): ns.hack(), ns.grow(), ns.weaken()
 
+# Game Concepts
+## Scripts vs Programs (Important)
+
+- **Scripts** (`.js`) are written by you using JavaScript.
+- **Programs** (`.exe`) are tools you buy or create (BruteSSH, FTPCrack, NUKE, etc).
+
+You do NOT buy scripts.
+You write scripts.
+
+Programs are used to gain access to servers.
+Scripts are used to automate hacking.
+
+## A note on JavaScript vs Bitburner functions
+
+Bitburner scripts are written in JavaScript.
+
+- Functions that start with `ns.` come from the game (Bitburner / Netscript).
+- Functions like `Math.floor()` come from JavaScript itself.
+
+You don’t need to know much JavaScript to start — we’ll introduce concepts as we use them.
+
+You can learn more about JavaScript here: https://javascript.info/ 
+You can learn more about NetScript/BitBurner here https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
+
 # Terminal Command Help
 ```
 Type 'help name' to learn more about the command 
@@ -292,7 +316,7 @@ A script running is a process with a PID.
   ```
 
 # Your first script (minimal + works)
-At it's core, the scripts you will write use Javascript. You can learn more here: https://javascript.info/ you can also then use the extra functions that the game provides, these will normally be prepended by `ns.` and for those, you can learn about them here https://github.com/bitburner-official/bitburner-src/blob/dev/markdown/bitburner.ns.md
+At it's core, the scripts you will write use Javascript. 
 
 ## HelloWorld
 First, lets create the file we will run (You should do this from `home`)  
