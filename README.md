@@ -901,45 +901,117 @@ Create `ram_report.js`:
 ```javascript
 /** @param {NS} ns **/
 export async function main(ns) {
+
+  // === THE STORY SETUP ===
+  // We are exploring a map of locations (servers).
+  // There is ONE dispatcher and MANY workers.
+  //
+  // - The dispatcher decides what location to explore next.
+  // - Workers explore locations and report back what they discover.
+  // - A shared map remembers which locations are already known.
+  //
+  // The goal: explore every reachable location exactly once.
+
+  // Starting location on the map
   const start = "home";
+
+  // === SHARED MAP ===
+  // "seen" is our shared map of locations we already KNOW exist.
+  // Once a location is on this map, it should NEVER be scheduled again.
+  //
+  // IMPORTANT:
+  // - "seen" does NOT mean "finished"
+  // - It means "discovered / acknowledged"
   const seen = new Set([start]);
+
+  // === JOB QUEUE (DISPATCHER OWNED) ===
+  // "queue" is the dispatcher’s list of locations
+  // that still need to be explored.
+  //
+  // Only the dispatcher touches this list.
   const queue = [start];
 
+  // === RESULTS NOTEBOOK ===
+  // This is where we write down information
+  // about locations we actually control (root access).
   const rows = [];
 
+  // === MAIN DISPATCH LOOP ===
+  // As long as there are unexplored locations waiting in the queue,
+  // the dispatcher keeps assigning work.
   while (queue.length) {
+
+    // === JOB ASSIGNMENT ===
+    // The dispatcher takes the NEXT location from the job list
+    // and assigns it to a worker.
+    //
+    // Removing it from the queue means:
+    // "This job is now being handled and should not be assigned again."
     const host = queue.shift();
+
+    // === WORKER EXPLORATION ===
+    // The worker explores this location and looks at neighboring locations.
     for (const next of ns.scan(host)) {
+
+      // === DISCOVERY CHECK ===
+      // If this neighboring location is NOT on the shared map yet,
+      // it means nobody has ever discovered it before.
       if (!seen.has(next)) {
+
+        // Mark the location as discovered so nobody schedules it twice.
         seen.add(next);
+
+        // Tell the dispatcher:
+        // "This is a new location that needs to be explored later."
         queue.push(next);
       }
     }
 
+    // === OWNERSHIP CHECK ===
+    // If we do NOT have root access, we cannot use this location.
+    // We skip recording info, but exploration is still considered done.
+    //
+    // "!" means NOT
+    // "continue" means "skip to the next assigned job"
     if (!ns.hasRootAccess(host)) continue;
 
+    // === DATA COLLECTION ===
+    // The worker reports back useful information
+    // about a location we actually control.
     const max = ns.getServerMaxRam(host);
     const used = ns.getServerUsedRam(host);
     const free = max - used;
 
+    // Write the result into our notebook.
     rows.push({ host, max, used, free });
   }
 
+  // === REPORTING PHASE ===
+  // Sort locations by FREE RAM (largest first),
+  // so we know where we can run the biggest jobs.
   rows.sort((a, b) => b.free - a.free);
 
-  let totalMax = 0, totalUsed = 0;
+  let totalMax = 0;
+  let totalUsed = 0;
 
+  // Print a readable table
   ns.tprint("HOST                MAX     USED    FREE");
   ns.tprint("------------------------------------------------");
+
   for (const r of rows) {
     totalMax += r.max;
     totalUsed += r.used;
+
+    // padEnd / padStart are just for pretty alignment
     ns.tprint(
       `${r.host.padEnd(18)} ${r.max.toFixed(2).padStart(6)}  ${r.used.toFixed(2).padStart(6)}  ${r.free.toFixed(2).padStart(6)}`
     );
   }
+
   ns.tprint("------------------------------------------------");
-  ns.tprint(`TOTAL               ${totalMax.toFixed(2)}  ${totalUsed.toFixed(2)}  ${(totalMax-totalUsed).toFixed(2)}`);
+  ns.tprint(
+    `TOTAL               ${totalMax.toFixed(2)}  ${totalUsed.toFixed(2)}  ${(totalMax - totalUsed).toFixed(2)}`
+  );
 }
 ```
 
